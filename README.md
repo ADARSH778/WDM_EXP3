@@ -43,16 +43,27 @@ from collections import defaultdict
 from itertools import combinations
 # Function to generate candidate k-item sequences
 def generate_candidates(dataset, k):
+    candidates = defaultdict(int)
+    for sequence in dataset:
+        for combo in combinations(sequence, k):
+            candidates[combo] += 1
+    return candidates
 
 
-    /WRITE YOUR CODE HERE/
 
 
 #Function to perform GSP algorithm
 def gsp(dataset, min_support):
-
-
-  /WRITE YOUR CODE HERE/
+    k = 1
+    frequent_patterns = {}
+    while True:
+        candidates = generate_candidates(dataset, k)
+        frequent_candidates = {pattern: support for pattern, support in candidates.items() if support >= min_support}
+        if not frequent_candidates:
+            break
+        frequent_patterns.update(frequent_candidates)
+        k += 1
+    return frequent_patterns
 
 
 #Example dataset for each category
